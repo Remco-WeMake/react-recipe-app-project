@@ -24,16 +24,13 @@ export const RecipeSinglePage = ({ item, setSelectedRecipe }) => {
     "CHOLE",
     "NA",
   ];
-  const filteredNutrients = Object.keys(item.totalNutrients)
-    .filter((key) => baseNutrientKeys.includes(key))
-    .reduce((obj, key) => {
-      obj[key] = item.totalNutrients[key];
-      return obj;
-    }, {});
-  const filteredNutrientsArray = Object.entries(filteredNutrients);
+
+  const filteredNutrients = baseNutrientKeys
+    .map((key) => item.totalNutrients[key])
+    .filter(Boolean);
 
   return (
-    <Stack gap={"80px"}>
+    <Stack mb="auto" gap={"80px"}>
       <Button
         variant={"plain"}
         w={"fit"}
@@ -58,7 +55,11 @@ export const RecipeSinglePage = ({ item, setSelectedRecipe }) => {
         }}
       >
         {/* Ingredients */}
-        <GridItem mb={"40px"} rowStart={{ md: 2 }} colStart={{ xl: 2 }}>
+        <GridItem
+          rowStart={{ base: 1, md: 2, xl: 1 }}
+          mb={"40px"}
+          colStart={{ xl: 2 }}
+        >
           <List.Root>
             {item.ingredientLines.map((ingredientLine) => (
               <List.Item
@@ -76,7 +77,7 @@ export const RecipeSinglePage = ({ item, setSelectedRecipe }) => {
           </List.Root>
         </GridItem>
         {/* Image and Heading */}
-        <GridItem colStart={{ md: 2, xl: 3 }} gap={"24px"}>
+        <GridItem colStart={{ md: 2, xl: 1 }} gap={"24px"}>
           <Image src={item.image} h="192px" w="192px"></Image>
           <Heading
             mt={"28px"}
@@ -123,7 +124,7 @@ export const RecipeSinglePage = ({ item, setSelectedRecipe }) => {
             interactive
           >
             <Table.Body>
-              {filteredNutrientsArray.map((filteredNutrientsItem) => (
+              {filteredNutrients.map((filteredNutrientsItem) => (
                 <Table.Row
                   backgroundColor={useColorModeValue("#f7f2eb", "#173d1a")}
                   _hover={{
@@ -132,7 +133,7 @@ export const RecipeSinglePage = ({ item, setSelectedRecipe }) => {
                       "#ffffff0e",
                     ),
                   }}
-                  key={filteredNutrientsItem[1].label}
+                  key={filteredNutrientsItem.label}
                 >
                   <Table.Cell
                     pl={0}
@@ -142,14 +143,14 @@ export const RecipeSinglePage = ({ item, setSelectedRecipe }) => {
                     fontSize={"0.75rem"}
                     borderColor={useColorModeValue("#173d1a", "#f7f2eb ")}
                   >
-                    {filteredNutrientsItem[1].label}
+                    {filteredNutrientsItem.label}
                   </Table.Cell>
                   <Table.Cell
                     borderColor={useColorModeValue("#173d1a", "#f7f2eb ")}
                   >
-                    {filteredNutrientsItem[1].quantity.toFixed(1)
+                    {filteredNutrientsItem.quantity.toFixed(1)
                       + " "
-                      + filteredNutrientsItem[1].unit}
+                      + filteredNutrientsItem.unit}
                   </Table.Cell>
                 </Table.Row>
               ))}
@@ -157,7 +158,11 @@ export const RecipeSinglePage = ({ item, setSelectedRecipe }) => {
           </Table.Root>
         </GridItem>
         {/* Time, Servings and Meal and Dish type */}
-        <GridItem mt="40px" alignSelf={"end"}>
+        <GridItem
+          rowStart={{ base: 5, md: 1, xl: 2 }}
+          mt={{ base: "40px", md: "0px", xl: "40px" }}
+          alignSelf={{ xl: "end" }}
+        >
           {item.totalTime || item.yield ?
             <Group>
               {item.totalTime ?

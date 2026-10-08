@@ -13,7 +13,18 @@ export const App = () => {
   return (
     <Stack background={useColorModeValue("#f7f2eb", "#173d1a")}>
       <Header />
-      <Center px="24px" mx="auto" w={"100%"} minH="100dvh" maxW="1440px">
+      <Center
+        my={{
+          base: "48px",
+          md: "80px",
+          xl: "128px",
+        }}
+        px="24px"
+        mx="auto"
+        w={"100%"}
+        minH="100dvh"
+        maxW="1440px"
+      >
         {selectedRecipe ?
           <RecipeSinglePage
             item={selectedRecipe}

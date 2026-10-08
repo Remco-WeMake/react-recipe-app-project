@@ -119,10 +119,9 @@ export const RecipeCard = ({ item, setSelectedRecipe }) => {
           position={"absolute"}
           minH="100%"
           inset={0}
-          zIndex={-1}
         ></Image>
 
-        <Flex gap="8px" p="8px" flexWrap="wrap" mt="16px">
+        <Flex zIndex={1} gap="8px" p="8px" flexWrap="wrap" mt="16px">
           {item.healthLabels.map((healtLabel) =>
             healtLabel === "Vegan" || healtLabel === "Vegetarian" ?
               <Tag.Root

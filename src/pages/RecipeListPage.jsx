@@ -8,26 +8,23 @@ export const RecipeListPage = ({ setSelectedRecipe }) => {
   const [foundRecipes, setFoundRecipes] = useState(data.hits);
 
   const searchRecipes = (e) => {
-    const searchResults = [];
     const searchTerm = e.target.value.toLowerCase();
 
-    data.hits.forEach((hit) => {
+    const searchResults = data.hits.filter((hit) => {
       const matchesLabel = hit.recipe.label.toLowerCase().includes(searchTerm);
 
       const matchesHealthLabel = hit.recipe.healthLabels.some((healthLabel) =>
         healthLabel.toLowerCase().includes(searchTerm),
       );
 
-      if (matchesLabel || matchesHealthLabel) {
-        searchResults.push(hit);
-      }
+      return matchesLabel || matchesHealthLabel;
     });
 
     setFoundRecipes(searchResults);
   };
 
   return (
-    <Stack mt={"128px"} gap="80px">
+    <Stack mb="auto" gap="80px">
       <Stack align={"center"} gap="32px">
         <Heading
           as="h1"
